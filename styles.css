@@ -12,9 +12,9 @@ div {
 }
 
 .calculator {
-    --side: min(75vw, 75vh);
+    --side: min(80vw, 80vh);
     background-color: darkblue;
-    border-radius: 5%;
+    border-radius: 30px;
     height: var(--side);
     flex-grow: 0;
     flex-shrink: 1;
