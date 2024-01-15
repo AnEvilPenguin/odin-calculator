@@ -19,4 +19,23 @@ div {
     flex-grow: 0;
     flex-shrink: 1;
     aspect-ratio: 4/5;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px
+}
+
+.screen-area {
+    background-color: aqua;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    margin: 20px;
+}
+
+.button-area {
+    background-color: salmon;
+    flex-grow: 4;
+    flex-shrink: 1;
+    flex-basis: auto;
+    margin: 20px;
 }
