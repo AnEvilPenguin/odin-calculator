@@ -20,3 +20,7 @@ function divide(next, current = 0) {
 
   return current / next;
 }
+
+function operate({ target }) {
+  console.log(target);
+}
