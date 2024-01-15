@@ -1,8 +1,22 @@
+
 div {
     display: flex;
     flex: auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
 }
 
 .container {
     flex-direction: column;
+}
+
+.calculator {
+    --side: min(75vw, 75vh);
+    background-color: darkblue;
+    border-radius: 5%;
+    height: var(--side);
+    flex-grow: 0;
+    flex-shrink: 1;
+    aspect-ratio: 4/5;
 }
