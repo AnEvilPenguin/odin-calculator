@@ -17,3 +17,14 @@ The aim of this project is to bring everything learned so far into a single proj
 - Ensure that the HTML and CSS comes together nicely to make for a pleasing interface.
 - Make sure that all of the functionality works as expected.
 - Combine all of the lessons learned so far into a single project.
+
+## Plan
+
+- Create and test basic JavaScript
+- Create basic wire-frame
+- Build UI to match wire-frame
+- Wire up static data to UI
+- Wire up fully
+- Implement additional functionality like history
+
+![calculator wire-frame](calculator-wireframe.jpg "calculator wire-frame")
