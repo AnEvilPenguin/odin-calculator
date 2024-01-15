@@ -61,12 +61,25 @@ div {
     background-color: darkgray;
     margin: 16px;
     border-radius: 4px;
+    text-align: center;
+    justify-content: center;
+    font-size: 24px;
 }
 
-.big-button {
+.go-button {
     background-color: green;
-    margin: 16px;
-    border-radius: 4px;
+}
+
+.stop-button {
+    background-color: #b32d2e;
+}
+
+.operation-button {
+    background-color: darkorange;
+}
+
+.negate-button {
+    background-color: #848482;
 }
 
 .button-group {
