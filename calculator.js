@@ -100,6 +100,7 @@ function number({ target: { id } }) {
   if (equalsExecuted) {
     clearAll();
     setBottomScreenContent(`${id}`);
+    equalsExecuted = false;
     return;
   }
 
@@ -112,15 +113,38 @@ function operate({ target }) {
     errorOperation = false;
   }
 
+  if (equalsExecuted) {
+    setTopScreenContent("");
+    equalsExecuted = false;
+  }
+
   const { id } = target;
 
   const bottomScreenContent = getBottomScreenContent();
+  const topScreenContent = getTopScreenContent();
 
   const displayOperator = target.innerText;
 
-  runningTotal = +bottomScreenContent;
+  const nextNumber = +bottomScreenContent;
 
-  setTopScreenContent(bottomScreenContent + displayOperator);
+  if (topScreenContent === "") {
+    runningTotal = nextNumber;
+
+    setTopScreenContent(bottomScreenContent + displayOperator);
+  } else {
+    if (bottomScreenContent === "0") {
+      setTopScreenContent(topScreenContent + displayOperator);
+    } else {
+      setTopScreenContent(
+        topScreenContent + bottomScreenContent + displayOperator
+      );
+
+      runningTotal += nextNumber;
+
+      execute(nextNumber);
+    }
+  }
+
   setBottomScreenContent("0");
 
   lastOperator = id;
@@ -134,20 +158,25 @@ function equals() {
   const bottomScreenContent = getBottomScreenContent();
   const topScreenContent = getTopScreenContent();
 
-  const operator = OPERATIONS[lastOperator];
-
   setTopScreenContent(topScreenContent + bottomScreenContent);
+
+  execute(+bottomScreenContent);
+
+  equalsExecuted = true;
+  runningTotal = 0;
+}
+
+function execute(nextNumber) {
+  const operator = OPERATIONS[lastOperator];
 
   let output;
 
   try {
-    output = operator(+bottomScreenContent, runningTotal);
+    output = operator(nextNumber, runningTotal);
   } catch (error) {
     output = error.message;
     errorOperation = true;
   }
 
-  setBottomScreenContent(`${output}`);
-
-  equalsExecuted = true;
+  setBottomScreenContent(output);
 }
