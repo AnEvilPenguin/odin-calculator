@@ -45,6 +45,8 @@ div {
     background-color: lightgray;
     border-radius: 10px;
     margin: 16px;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .column {
@@ -86,4 +88,30 @@ div {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 200px;
+}
+
+.screen-top {
+    flex-grow: 1;
+    flex-shrink: 2;
+}
+
+.screen-bottom {
+    flex-grow: 2;
+    flex-shrink: 1;
+}
+
+.screen-top, .screen-bottom {
+    margin: 4px;
+    justify-content: flex-end;
+    padding: 0px;
+}
+
+.screen-top p {
+    font-size: smaller;
+    margin: 0px 16px;
+}
+
+.screen-bottom p {
+    font-size: larger;
+    margin: 0px 8px;
 }
