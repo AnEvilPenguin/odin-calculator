@@ -27,6 +27,14 @@ function clearAll() {
   clearElement();
 }
 
+function addDecimal() {
+  const bottomScreen = document.querySelector(".screen-bottom p");
+
+  if (!bottomScreen.innerText.includes(".")) {
+    bottomScreen.innerText += ".";
+  }
+}
+
 function operate({ target }) {
   console.log(target);
 }
