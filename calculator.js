@@ -107,6 +107,32 @@ function number({ target: { id } }) {
   setBottomScreenContent(bottomScreenContent + id);
 }
 
+function operateScreens(
+  bottomScreenContent,
+  topScreenContent,
+  displayOperator
+) {
+  const nextNumber = +bottomScreenContent;
+
+  if (topScreenContent === "") {
+    runningTotal = nextNumber;
+
+    setTopScreenContent(bottomScreenContent + displayOperator);
+    return;
+  }
+
+  if (bottomScreenContent === "0") {
+    setTopScreenContent(topScreenContent + displayOperator);
+    return;
+  }
+
+  setTopScreenContent(topScreenContent + bottomScreenContent + displayOperator);
+
+  runningTotal += nextNumber;
+
+  execute(nextNumber);
+}
+
 function operate({ target }) {
   if (errorOperation) {
     clearAll();
@@ -125,25 +151,7 @@ function operate({ target }) {
 
   const displayOperator = target.innerText;
 
-  const nextNumber = +bottomScreenContent;
-
-  if (topScreenContent === "") {
-    runningTotal = nextNumber;
-
-    setTopScreenContent(bottomScreenContent + displayOperator);
-  } else {
-    if (bottomScreenContent === "0") {
-      setTopScreenContent(topScreenContent + displayOperator);
-    } else {
-      setTopScreenContent(
-        topScreenContent + bottomScreenContent + displayOperator
-      );
-
-      runningTotal += nextNumber;
-
-      execute(nextNumber);
-    }
-  }
+  operateScreens(bottomScreenContent, topScreenContent, displayOperator);
 
   setBottomScreenContent("0");
 
