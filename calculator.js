@@ -121,6 +121,11 @@ function operateScreens(
     return;
   }
 
+  if (bottomScreenContent === "0" && topScreenContent.match(/[^\d]$/)) {
+    const length = topScreenContent.length;
+    topScreenContent = topScreenContent.substring(0, length - 1);
+  }
+
   if (bottomScreenContent === "0") {
     setTopScreenContent(topScreenContent + displayOperator);
     return;
