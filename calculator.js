@@ -1,3 +1,14 @@
+let runningTotal = 0;
+let lastOperator;
+let equalsExecuted = false;
+
+const OPERATIONS = {
+  add,
+  subtract,
+  multiply,
+  divide,
+};
+
 function add(next, current = 0) {
   return current + next;
 }
@@ -49,6 +60,8 @@ function negate() {
 function number({ target: { id } }) {
   const bottomScreen = document.querySelector(".screen-bottom p");
 
+  equalsExecuted = false;
+
   if (bottomScreen.innerText === "0") {
     bottomScreen.innerText = `${id}`;
     return;
@@ -58,5 +71,36 @@ function number({ target: { id } }) {
 }
 
 function operate({ target }) {
-  console.log(target);
+  const { id } = target;
+
+  const topScreen = document.querySelector(".screen-top p");
+  const bottomScreen = document.querySelector(".screen-bottom p");
+
+  const displayOperator = target.innerText;
+
+  runningTotal = +bottomScreen.innerText;
+  topScreen.innerText += bottomScreen.innerText + displayOperator;
+  bottomScreen.innerText = "0";
+
+  lastOperator = id;
+}
+
+function equals() {
+  if (equalsExecuted) {
+    return;
+  }
+
+  const topScreen = document.querySelector(".screen-top p");
+  const bottomScreen = document.querySelector(".screen-bottom p");
+
+  const operator = OPERATIONS[lastOperator];
+
+  topScreen.innerText += bottomScreen.innerText;
+  const next = +bottomScreen.innerText;
+
+  const output = operator(next, runningTotal);
+
+  bottomScreen.innerText = `${output}`;
+
+  equalsExecuted = true;
 }
