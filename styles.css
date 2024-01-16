@@ -90,16 +90,6 @@ div {
     flex-basis: 200px;
 }
 
-.screen-top {
-    flex-grow: 1;
-    flex-shrink: 2;
-}
-
-.screen-bottom {
-    flex-grow: 2;
-    flex-shrink: 1;
-}
-
 .screen-top, .screen-bottom {
     margin: 4px;
     justify-content: flex-end;
@@ -112,6 +102,17 @@ div {
 }
 
 .screen-bottom p {
-    font-size: larger;
+    font-size: x-large;
     margin: 0px 8px;
+}
+
+
+/* :empty - when it has no child elements or text */
+/* ::before - apply styling before the element (e.g. to put an emoji before a link) */
+/* inline-block allows us to set a height on the element */
+/* By their powers combined, we can keep the text at a minimum dynamic height */
+/* Another potential option might be to set a min height here, but I was unable to get working */
+p:empty::before {
+    content:"";
+    display:inline-block;
 }
