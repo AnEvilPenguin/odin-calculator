@@ -1,6 +1,7 @@
 let runningTotal = 0;
 let lastOperator;
 let equalsExecuted = false;
+let errorOperation = false;
 
 const OPERATIONS = {
   add,
@@ -59,6 +60,11 @@ function negate() {
 }
 
 function number({ target: { id } }) {
+  if (errorOperation) {
+    clearAll();
+    errorOperation = false;
+  }
+
   const bottomScreen = document.querySelector(".screen-bottom p");
 
   if (bottomScreen.innerText === "0") {
@@ -76,6 +82,11 @@ function number({ target: { id } }) {
 }
 
 function operate({ target }) {
+  if (errorOperation) {
+    clearAll();
+    errorOperation = false;
+  }
+
   const { id } = target;
 
   const topScreen = document.querySelector(".screen-top p");
@@ -103,7 +114,14 @@ function equals() {
   topScreen.innerText += bottomScreen.innerText;
   const next = +bottomScreen.innerText;
 
-  const output = operator(next, runningTotal);
+  let output;
+
+  try {
+    output = operator(next, runningTotal);
+  } catch (error) {
+    output = error.message;
+    errorOperation = true;
+  }
 
   bottomScreen.innerText = `${output}`;
 
