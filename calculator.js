@@ -35,6 +35,17 @@ function addDecimal() {
   }
 }
 
+function number({ target: { id } }) {
+  const bottomScreen = document.querySelector(".screen-bottom p");
+
+  if (bottomScreen.innerText === "0") {
+    bottomScreen.innerText = `${id}`;
+    return;
+  }
+
+  bottomScreen.innerText += id;
+}
+
 function operate({ target }) {
   console.log(target);
 }
