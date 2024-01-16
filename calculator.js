@@ -34,6 +34,7 @@ function clearElement() {
 }
 
 function clearAll() {
+  equalsExecuted = false;
   document.querySelector(".screen-top p").innerText = "";
   clearElement();
 }
@@ -60,9 +61,13 @@ function negate() {
 function number({ target: { id } }) {
   const bottomScreen = document.querySelector(".screen-bottom p");
 
-  equalsExecuted = false;
-
   if (bottomScreen.innerText === "0") {
+    bottomScreen.innerText = `${id}`;
+    return;
+  }
+
+  if (equalsExecuted) {
+    clearAll();
     bottomScreen.innerText = `${id}`;
     return;
   }
