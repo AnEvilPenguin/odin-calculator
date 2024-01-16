@@ -133,8 +133,6 @@ function operateScreens(
 
   setTopScreenContent(topScreenContent + bottomScreenContent + displayOperator);
 
-  runningTotal += nextNumber;
-
   execute(nextNumber);
 }
 
@@ -157,6 +155,8 @@ function operate({ target }) {
   const displayOperator = target.innerText;
 
   operateScreens(bottomScreenContent, topScreenContent, displayOperator);
+
+  runningTotal = +getBottomScreenContent();
 
   setBottomScreenContent("0");
 
