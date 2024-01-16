@@ -30,33 +30,58 @@ function divide(next, current = 0) {
   return current / next;
 }
 
+function getElementInnerText(selector) {
+  return document.querySelector(selector).innerText;
+}
+
+function setElementInnerText(selector, content) {
+  const element = document.querySelector(selector);
+  element.innerText = content;
+}
+
+function getTopScreenContent() {
+  return getElementInnerText(".screen-top p");
+}
+
+function setTopScreenContent(content) {
+  setElementInnerText(".screen-top p", content);
+}
+
+function getBottomScreenContent() {
+  return getElementInnerText(".screen-bottom p");
+}
+
+function setBottomScreenContent(content) {
+  setElementInnerText(".screen-bottom p", content);
+}
+
 function clearElement() {
-  document.querySelector(".screen-bottom p").innerText = "0";
+  setBottomScreenContent("0");
 }
 
 function clearAll() {
   equalsExecuted = false;
-  document.querySelector(".screen-top p").innerText = "";
+  setTopScreenContent("");
   clearElement();
 }
 
 function addDecimal() {
-  const bottomScreen = document.querySelector(".screen-bottom p");
+  const bottomScreenContent = getBottomScreenContent();
 
-  if (!bottomScreen.innerText.includes(".")) {
-    bottomScreen.innerText += ".";
+  if (!bottomScreenContent.includes(".")) {
+    setBottomScreenContent(bottomScreenContent + ".");
   }
 }
 
 function negate() {
-  const bottomScreen = document.querySelector(".screen-bottom p");
+  const bottomScreenContent = getBottomScreenContent();
 
   const output =
-    bottomScreen.innerText[0] === "-"
-      ? bottomScreen.innerText.substring(1)
-      : "-" + bottomScreen.innerText;
+    bottomScreenContent[0] === "-"
+      ? bottomScreenContent.substring(1)
+      : "-" + bottomScreenContent;
 
-  bottomScreen.innerText = output;
+  setBottomScreenContent(output);
 }
 
 function number({ target: { id } }) {
@@ -65,20 +90,20 @@ function number({ target: { id } }) {
     errorOperation = false;
   }
 
-  const bottomScreen = document.querySelector(".screen-bottom p");
+  const bottomScreenContent = getBottomScreenContent();
 
-  if (bottomScreen.innerText === "0") {
-    bottomScreen.innerText = `${id}`;
+  if (bottomScreenContent === "0") {
+    setBottomScreenContent(`${id}`);
     return;
   }
 
   if (equalsExecuted) {
     clearAll();
-    bottomScreen.innerText = `${id}`;
+    setBottomScreenContent(`${id}`);
     return;
   }
 
-  bottomScreen.innerText += id;
+  setBottomScreenContent(bottomScreenContent + id);
 }
 
 function operate({ target }) {
@@ -89,14 +114,14 @@ function operate({ target }) {
 
   const { id } = target;
 
-  const topScreen = document.querySelector(".screen-top p");
-  const bottomScreen = document.querySelector(".screen-bottom p");
+  const bottomScreenContent = getBottomScreenContent();
 
   const displayOperator = target.innerText;
 
-  runningTotal = +bottomScreen.innerText;
-  topScreen.innerText += bottomScreen.innerText + displayOperator;
-  bottomScreen.innerText = "0";
+  runningTotal = +bottomScreenContent;
+
+  setTopScreenContent(bottomScreenContent + displayOperator);
+  setBottomScreenContent("0");
 
   lastOperator = id;
 }
@@ -106,24 +131,23 @@ function equals() {
     return;
   }
 
-  const topScreen = document.querySelector(".screen-top p");
-  const bottomScreen = document.querySelector(".screen-bottom p");
+  const bottomScreenContent = getBottomScreenContent();
+  const topScreenContent = getTopScreenContent();
 
   const operator = OPERATIONS[lastOperator];
 
-  topScreen.innerText += bottomScreen.innerText;
-  const next = +bottomScreen.innerText;
+  setTopScreenContent(topScreenContent + bottomScreenContent);
 
   let output;
 
   try {
-    output = operator(next, runningTotal);
+    output = operator(+bottomScreenContent, runningTotal);
   } catch (error) {
     output = error.message;
     errorOperation = true;
   }
 
-  bottomScreen.innerText = `${output}`;
+  setBottomScreenContent(`${output}`);
 
   equalsExecuted = true;
 }
