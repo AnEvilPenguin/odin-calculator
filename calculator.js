@@ -90,17 +90,17 @@ function number({ target: { id } }) {
     errorOperation = false;
   }
 
-  const bottomScreenContent = getBottomScreenContent();
-
-  if (bottomScreenContent === "0") {
-    setBottomScreenContent(`${id}`);
-    return;
-  }
-
   if (equalsExecuted) {
     clearAll();
     setBottomScreenContent(`${id}`);
     equalsExecuted = false;
+    return;
+  }
+
+  const bottomScreenContent = getBottomScreenContent();
+
+  if (bottomScreenContent === "0") {
+    setBottomScreenContent(`${id}`);
     return;
   }
 
@@ -168,6 +168,10 @@ function equals() {
     return;
   }
 
+  if (!lastOperator) {
+    return;
+  }
+
   const bottomScreenContent = getBottomScreenContent();
   const topScreenContent = getTopScreenContent();
 
@@ -176,6 +180,7 @@ function equals() {
   execute(+bottomScreenContent);
 
   equalsExecuted = true;
+  lastOperator = null;
   runningTotal = 0;
 }
 
